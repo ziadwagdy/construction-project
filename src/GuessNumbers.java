@@ -39,29 +39,10 @@ public class GuessNumbers extends Game {
     @Override
     public void setup() {
         this.randomNumber = getRandomNumber();
-        int choice;
-        System.out.print("Enter level: 1, 2, 3: ");
-        choice = new Scanner(System.in).nextInt();
-
-        switch (choice) {
-            case 1 -> levelOne();
-            case 2 -> levelTwo();
-            case 3 -> levelThree();
-        }
-
         System.out.println(this.randomNumber);
-        System.out.println("Enter your guess: ");
-        while (noOfGuesses != 0) {
-            System.out.println("Chance #" + noOfGuesses);
-            getUserInput();
-            if (isCorrectGuess()) {
-                break;
-            }
-        }
-
-        if (noOfGuesses == 0) {
-            System.out.println("You Lose!");
-        }
+        // TODO : create messages to show which game we play (NOUR)
+        // TODO : check the messages (NOUR)
+        this.playGame();
     }
 
     public void levelOne() {

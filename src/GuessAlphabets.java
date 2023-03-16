@@ -35,29 +35,8 @@ public class GuessAlphabets extends Game {
     @Override
     public void setup() {
         this.randomAlphabet = (char) getRandomChar();
-        int choice;
-        System.out.print("Enter level: 1, 2, 3: ");
-        choice = new Scanner(System.in).nextInt();
-
-        switch (choice) {
-            case 1 -> levelOne();
-            case 2 -> levelTwo();
-            case 3 -> levelThree();
-        }
-
         System.out.println(this.randomAlphabet);
-        System.out.println("Enter your guess: ");
-        while (noOfGuesses != 0) {
-            System.out.println("Chance #" + noOfGuesses);
-            getUserInput();
-            if (isCorrectGuess()) {
-                break;
-            }
-        }
-
-        if (noOfGuesses == 0) {
-            System.out.println("You Lose!");
-        }
+        this.playGame();
     }
 
     @Override
