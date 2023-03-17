@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public abstract class Game {
 
-    // TODO : how will we calculate the high score (NOUR)
+    // TODO : how will we calculate the high score (NOURE)
     int noOfGuesses;
 
     boolean isHint;
@@ -24,31 +24,54 @@ public abstract class Game {
     }
 
     public abstract boolean isCorrectGuess();
+
     public abstract void setup();
+
     public abstract void getUserInput();
+
     public abstract void levelOne();
+
     public abstract void levelTwo();
+
     public abstract void levelThree();
 
-    public void playGame(){
+    public abstract int getHighScore();
+
+    public abstract int increaseTries();
+
+    public void playGame() {
         int choice;
-        System.out.print("Enter level: 1, 2, 3: ");
+        System.out.print("\nStart Menu"
+                + "\n-----------"
+                + "\nSelect a difficulty level"
+                + "\n1. Easy\n2. Medium\n3. Hard\n4. Return to main menu\n===> ");
         choice = new Scanner(System.in).nextInt();
         switch (choice) {
             case 1 -> levelOne();
             case 2 -> levelTwo();
             case 3 -> levelThree();
+            case 4 -> {
+                // return to main menu
+            }
+            default -> {
+                // invalid option choose level again
+                System.out.println("Invalid option");
+                this.setup();
+            }
         }
         System.out.println("Enter your guess: ");
         while (noOfGuesses != 0) {
             System.out.println("Chance #" + noOfGuesses);
             getUserInput();
+            increaseTries();
             if (this.isCorrectGuess()) {
-                break;
+                this.setup();
             }
         }
         if (noOfGuesses == 0) {
             System.out.println("You Lose!");
         }
     }
+
+
 }

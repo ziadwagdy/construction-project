@@ -42,6 +42,7 @@ public class GuessNumbers extends Game {
         System.out.println(this.randomNumber);
         // TODO : create messages to show which game we play (NOUR)
         // TODO : check the messages (NOUR)
+        this.noOfGuesses = 0;
         this.playGame();
     }
 
@@ -60,6 +61,16 @@ public class GuessNumbers extends Game {
     public void levelThree() {
         this.setNoOfGuesses(3);
         this.setHint(false);
+    }
+
+    @Override
+    public int getHighScore() {
+        return this.highScore;
+    }
+
+    @Override
+    public int increaseTries() {
+        return 0;
     }
 
     @Override

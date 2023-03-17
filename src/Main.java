@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        GuessAlphabets alphabets = new GuessAlphabets();
         while (true) {
-            Scanner input = new Scanner(System.in);
             System.out.println(
                     """
                             Welcome, play the game!
@@ -13,19 +13,27 @@ public class Main {
                             Enter 4 for Credits
                             Enter 5 to Exit"""
             );
+            Scanner input = new Scanner(System.in);
             int choice = input.nextInt();
-            if (choice == 5){
+            if (choice == 5) {
                 break;
-            }
-
-            switch (choice) {
-                case 1 -> {
-                    GuessAlphabets alphabets = new GuessAlphabets();
-                    alphabets.setup();
-                }
-                case 2 -> {
-                    GuessNumbers numbers = new GuessNumbers();
-                    numbers.setup();
+            } else {
+                switch (choice) {
+                    case 1 -> {
+                        alphabets.setup();
+                    }
+                    case 2 -> {
+//                      numbers.setup();
+                        newGuessNumbers guessNumbers = new newGuessNumbers();
+                        guessNumbers.setup();
+                    }
+                    case 3 -> {
+                        if (alphabets.getHighScore() == 0) {
+                            System.out.println("Play first please!");
+                        } else {
+                            System.out.println("Your High Score is " + alphabets.getHighScore());
+                        }
+                    }
                 }
             }
         }
