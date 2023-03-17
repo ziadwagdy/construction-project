@@ -2,7 +2,6 @@ import java.util.Scanner;
 
 public abstract class Game {
 
-    // TODO : how will we calculate the high score (NOURE)
     int noOfGuesses;
 
     boolean isHint;
@@ -40,6 +39,8 @@ public abstract class Game {
     public abstract int increaseTries();
 
     public void playGame() {
+
+        this.noOfGuesses = 0;
         int choice;
         System.out.print("\nStart Menu"
                 + "\n-----------"
@@ -51,7 +52,7 @@ public abstract class Game {
             case 2 -> levelTwo();
             case 3 -> levelThree();
             case 4 -> {
-                // return to main menu
+                return;
             }
             default -> {
                 // invalid option choose level again
@@ -68,10 +69,6 @@ public abstract class Game {
                 this.setup();
             }
         }
-        if (noOfGuesses == 0) {
-            System.out.println("You Lose!");
-        }
     }
-
 
 }

@@ -24,7 +24,7 @@ public class GuessAlphabets extends Game {
         return randomAlphabet;
     }
 
-    @Override
+    //    @Override
     public boolean isCorrectGuess() {
         // length of the user input is one character and the character is less than the random alphabet
         if (this.userInput.length() == 1 && this.userInput.charAt(0) == this.randomAlphabet) {
@@ -42,8 +42,13 @@ public class GuessAlphabets extends Game {
             }
             this.noOfGuesses--;
         }
+
+        if (noOfGuesses == 0) {
+            System.out.println("You Lose!");
+        }
         return false;
     }
+
 
     @Override
     public void setup() {

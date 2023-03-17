@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -5,6 +7,16 @@ public class GuessNumbers extends Game {
     int highScore = 0;
     int userInput;
     int randomNumber;
+
+    int tries;
+
+    ArrayList<Integer> score = new ArrayList<>();
+
+    public void appendScore(int tries) {
+        score.add(tries);
+        setHighScore();
+    }
+
 
     public GuessNumbers() {
         Random random = new Random();
@@ -33,6 +45,9 @@ public class GuessNumbers extends Game {
             }
             this.noOfGuesses--;
         }
+        if (noOfGuesses == 0) {
+            System.out.println("You Lose!");
+        }
         return false;
     }
 
@@ -42,7 +57,10 @@ public class GuessNumbers extends Game {
         System.out.println(this.randomNumber);
         // TODO : create messages to show which game we play (NOUR)
         // TODO : check the messages (NOUR)
-        this.noOfGuesses = 0;
+        if (this.tries != 0) {
+            this.appendScore(this.tries);
+        }
+        this.tries = 0;
         this.playGame();
     }
 
@@ -64,11 +82,6 @@ public class GuessNumbers extends Game {
     }
 
     @Override
-    public int getHighScore() {
-        return this.highScore;
-    }
-
-    @Override
     public int increaseTries() {
         return 0;
     }
@@ -79,4 +92,13 @@ public class GuessNumbers extends Game {
         this.userInput = input.nextInt();
     }
 
+    public void setHighScore() {
+        this.highScore = Collections.min(this.score);
+    }
+
+    @Override
+    public int getHighScore() {
+        // Get the minimum value in the score list
+        return this.highScore;
+    }
 }

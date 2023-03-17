@@ -159,6 +159,7 @@ public class newGuessNumbers extends Game {
                 + "\n1. Easy\n2. Medium\n3. Hard\n4. Return to main menu\n===> ");
     }
 
+    // TODO : make one function for all:
     public static void instructionsEasy() {
         System.out.println("\nGuess the Number "
                 + "\n---Instructions---"
