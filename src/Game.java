@@ -7,8 +7,15 @@ public abstract class Game {
 
     enum GAME_TYPE {
         Numbers,
-        Alphabets
+        Alphabets,
     }
+
+    enum LEVEL {
+        Easy,
+        Medium,
+        Hard,
+    }
+
     public static Player getPlayer() {
         return player;
     }

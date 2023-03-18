@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class GuessNumbers extends Game {
     private int userInput;
     private int randomNumber;
-
     private int bound;
 
 
@@ -12,14 +11,13 @@ public class GuessNumbers extends Game {
         this.bound = bound;
     }
 
-
     public int getBound() {
         return bound;
     }
 
     public int getRandomNumber() {
         Random random = new Random();
-        return random.nextInt(getBound());
+        return random.nextInt(getBound()) + 1;
     }
 
     @Override
@@ -64,13 +62,12 @@ public class GuessNumbers extends Game {
         this.setNoOfGuesses(5);
         this.setHint(true);
         this.setBound(15);
-        // TODO : user getInstructions
-
-
-        // TODO: convert this to a function getRange() in Game class with
-        // type, bound, chances parameters
-        System.out.println("Enter numbers in range 1 to " + getBound()
-                + ". " + this.getNoOfGuesses() + " Chances left");
+        this.getRange(String.valueOf(GAME_TYPE.Numbers), getBound(), getNoOfGuesses());
+        System.out.println(
+                this.getInstructions(String.valueOf(GAME_TYPE.Numbers),
+                        getNoOfGuesses(),
+                        String.valueOf(LEVEL.Easy))
+        );
     }
 
     @Override
@@ -78,8 +75,12 @@ public class GuessNumbers extends Game {
         this.setNoOfGuesses(4);
         this.setHint(false);
         this.setBound(25);
-        System.out.println("Enter numbers in range 1 to " + getBound()
-                + ". " + this.getNoOfGuesses() + " Chances left");
+        this.getRange(String.valueOf(GAME_TYPE.Numbers), getBound(), getNoOfGuesses());
+        System.out.println(
+                this.getInstructions(String.valueOf(GAME_TYPE.Numbers),
+                        getNoOfGuesses(),
+                        String.valueOf(LEVEL.Medium))
+        );
     }
 
     @Override
@@ -87,8 +88,12 @@ public class GuessNumbers extends Game {
         this.setNoOfGuesses(3);
         this.setHint(false);
         this.setBound(40);
-        System.out.println("Enter numbers in range 1 to " + getBound()
-                + ". " + this.getNoOfGuesses() + " Chances left");
+        this.getRange(String.valueOf(GAME_TYPE.Numbers), getBound(), getNoOfGuesses());
+        System.out.println(
+                this.getInstructions(String.valueOf(GAME_TYPE.Numbers),
+                        getNoOfGuesses(),
+                        String.valueOf(LEVEL.Hard))
+        );
     }
 
     @Override

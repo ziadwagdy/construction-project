@@ -7,8 +7,8 @@ public class Main {
         while (true) {
             System.out.println("""
                     Welcome, play the game!
-                    Enter 1 for Alphabets
-                    Enter 2 for numbers
+                    Enter 1 for numbers
+                    Enter 2 for Alphabets
                     Enter 3 for getting the high score
                     Enter 4 for Credits
                     Enter 5 to Exit"""
@@ -16,8 +16,8 @@ public class Main {
             Scanner input = new Scanner(System.in);
             int choice = input.nextInt();
             switch (choice) {
-                case 1 -> alphabets.play();
-                case 2 -> numbers.play();
+                case 1 -> numbers.play();
+                case 2 -> alphabets.play();
                 case 3 -> {
                     if (Game.getPlayer().getNumbersHighScore() == 0) {
                         System.out.println("Guessing Numbers is not played yet");

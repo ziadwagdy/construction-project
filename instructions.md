@@ -2,25 +2,25 @@
 
     From the main menu the user chooses :
     
-    Number 1 to Play the Guessing Numbers
+    Number 1 to Play the Guessing Numbers ✅
         --> TODO except high score 
     
-    Number 2 to Play the Guessing Alphabets
+    Number 2 to Play the Guessing Alphabets ✅
          --> TODO except high score 
 
-    Number 3 to get the High score.
+    Number 3 to get the High score. ✅
          --> TODO not done yet
 
-    Number. 4 to display credits.
+    Number. 4 to display credits. ✅
          --> TODO NOT YET 
 
-    Number 5 to exit the game. 
+    Number 5 to exit the game. ✅
         
 
     After choosing option 1, or 2 :- 
 
     --> How to be played: 
-        first -#1 choosing level-,
+        first -#1 choosing level-,[INSTRUTIONS.md](INSTRUTIONS.md)
             --> Random char or num is generated.
             --> tries are set to 0. 
             --> user chooses difficulity level 
@@ -33,8 +33,8 @@
         
         second, -level-,
             Easy, 
-                -> user can play for 5 chances
-                if the user enters a wrong guess: 
+                -> user can play for 5 chances ✅
+                if the user enters a wrong guess: ✅
                     -> decrease chances and display number of chances 
                     -> display wrong guess with a hint (lower or higher)
                     -> increase number of tries; 

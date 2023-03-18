@@ -4,10 +4,20 @@ import java.util.Scanner;
 public class GuessAlphabets extends Game {
     private String userInput;
     private char randomAlphabet;
+    private int bound;
+
+
+    public void setBound(int bound) {
+        this.bound = bound;
+    }
+
+    public int getBound() {
+        return bound;
+    }
 
     public int getRandomChar() {
         Random rand = new Random();
-        randomAlphabet = (char) (rand.nextInt(26) + 'a');
+        randomAlphabet = (char) (rand.nextInt(getBound()) + 'a');
         return randomAlphabet;
     }
 
@@ -29,9 +39,13 @@ public class GuessAlphabets extends Game {
     public void levelOne() {
         this.setNoOfGuesses(5);
         this.setHint(true);
+        this.setBound(10);
+        this.getRange(String.valueOf(GAME_TYPE.Alphabets), getBound(), getNoOfGuesses());
+
         System.out.println(
-                getInstructions(String.valueOf(GAME_TYPE.Alphabets),
-                        5, "Easy")
+                this.getInstructions(String.valueOf(GAME_TYPE.Alphabets),
+                        getNoOfGuesses(),
+                        String.valueOf(LEVEL.Easy))
         );
     }
 
@@ -39,8 +53,13 @@ public class GuessAlphabets extends Game {
     public void levelTwo() {
         this.setNoOfGuesses(4);
         this.setHint(false);
+        this.setBound(17);
+        this.getRange(String.valueOf(GAME_TYPE.Alphabets), getBound(), getNoOfGuesses());
+
         System.out.println(
-                getInstructions(String.valueOf(GAME_TYPE.Alphabets), 4, "Medium")
+                this.getInstructions(String.valueOf(GAME_TYPE.Alphabets),
+                        getNoOfGuesses(),
+                        String.valueOf(LEVEL.Medium))
         );
     }
 
@@ -48,9 +67,13 @@ public class GuessAlphabets extends Game {
     public void levelThree() {
         this.setNoOfGuesses(3);
         this.setHint(false);
+        this.setBound(26);
+        this.getRange(String.valueOf(GAME_TYPE.Alphabets), getBound(), getNoOfGuesses());
+
         System.out.println(
-                getInstructions(String.valueOf(GAME_TYPE.Alphabets),
-                        3, "Hard")
+                this.getInstructions(String.valueOf(GAME_TYPE.Alphabets),
+                        getNoOfGuesses(),
+                        String.valueOf(LEVEL.Hard))
         );
     }
 
@@ -87,3 +110,5 @@ public class GuessAlphabets extends Game {
     }
 
 }
+
+
