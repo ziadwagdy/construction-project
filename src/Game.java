@@ -20,6 +20,8 @@ public abstract class Game {
         return player;
     }
 
+    private String rangeMessage;
+
     public boolean isHint() {
         return isHint;
     }
@@ -97,10 +99,20 @@ public abstract class Game {
     }
 
 
-    // TODO create this function
-    public String getRange(){
-        return "";
+    private void setRangeMessage(String range) {
+        this.rangeMessage = range;
     }
+
+    private String getRangeMessage() {
+        return this.rangeMessage;
+    }
+
+    public void getRange(String type, int bound, int chances) {
+        String range = "Enter " + type + " in range 1 to" + bound +
+                " " + chances + " Chances left";
+        this.setRangeMessage(range);
+    }
+
     public String getInstructions(String type, int chances, String level) {
         String instruction = """
                 Guess the\s""" + type + """ 
@@ -116,8 +128,7 @@ public abstract class Game {
                 """ + level + """
                 :""";
 
-        // TODO Call the print range function
-        String range = getRange();
+        String range = getRangeMessage();
 
         return instruction + range;
     }

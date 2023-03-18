@@ -45,4 +45,17 @@ public class Main {
             }
         }
     }
+
+//    public static String credits(){
+//        return "Zeyad Wagdy Abdelfattah Mohamed "+
+//                "Abullah Hatemoğlu " +
+//                "Noureldien Soltan";
+//    }
+
+    /* TODOO :
+        Check all the printed messages
+        update instructions (main menu)
+        add credits
+        add comments on not clear methods
+     */
 }

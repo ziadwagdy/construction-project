@@ -6,7 +6,6 @@ public class GuessNumbers extends Game {
     private int randomNumber;
     private int bound;
 
-
     public void setBound(int bound) {
         this.bound = bound;
     }
