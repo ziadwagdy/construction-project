@@ -1,22 +1,9 @@
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
 public class GuessAlphabets extends Game {
-    int highScore = 0;
-
-    ArrayList<Integer> score = new ArrayList<>();
-
-    public void appendScore(int tries) {
-        score.add(tries);
-        setHighScore();
-    }
-
-    String userInput;
-    char randomAlphabet;
-
-    int tries;
+    private String userInput;
+    private char randomAlphabet;
 
     public int getRandomChar() {
         Random rand = new Random();
@@ -24,41 +11,47 @@ public class GuessAlphabets extends Game {
         return randomAlphabet;
     }
 
-    //    @Override
-    public boolean isCorrectGuess() {
-        // length of the user input is one character and the character is less than the random alphabet
-        if (this.userInput.length() == 1 && this.userInput.charAt(0) == this.randomAlphabet) {
-            System.out.println(this.userInput + " is a correct guess! YOU WIN");
-            System.out.println("You won after " + (this.tries) + " Tries");
-            return true;
-        } else if (this.userInput.length() == 1 && this.userInput.charAt(0) < this.randomAlphabet) {
-            if (isHint) {
-                System.out.println(this.userInput + " is too low!");
-            }
-            this.noOfGuesses--;
-        } else {
-            if (isHint) {
-                System.out.println(this.userInput + " Is too high!");
-            }
-            this.noOfGuesses--;
-        }
-
-        if (noOfGuesses == 0) {
-            System.out.println("You Lose!");
-        }
-        return false;
-    }
-
-
     @Override
-    public void setup() {
+    public void generateRandom() {
         this.randomAlphabet = (char) getRandomChar();
         System.out.println(this.randomAlphabet);
-        if (this.tries != 0) {
-            this.appendScore(this.tries);
+    }
+
+    @Override
+    public void play() {
+        if (getPlayer().tries != 0) {
+            getPlayer().setAlphabetsScore(getPlayer().tries);
         }
-        this.tries = 0;
+        getPlayer().tries = 0;
         this.playGame();
+    }
+
+    public void levelOne() {
+        this.setNoOfGuesses(5);
+        this.setHint(true);
+        System.out.println(
+                getInstructions(String.valueOf(GAME_TYPE.Alphabets),
+                        5, "Easy")
+        );
+    }
+
+    @Override
+    public void levelTwo() {
+        this.setNoOfGuesses(4);
+        this.setHint(false);
+        System.out.println(
+                getInstructions(String.valueOf(GAME_TYPE.Alphabets), 4, "Medium")
+        );
+    }
+
+    @Override
+    public void levelThree() {
+        this.setNoOfGuesses(3);
+        this.setHint(false);
+        System.out.println(
+                getInstructions(String.valueOf(GAME_TYPE.Alphabets),
+                        3, "Hard")
+        );
     }
 
     @Override
@@ -67,37 +60,30 @@ public class GuessAlphabets extends Game {
         this.userInput = input.next();
     }
 
-    public int increaseTries() {
-        this.tries++;
-        return this.tries;
-    }
 
+    //    @Override
+    public boolean isCorrectGuess() {
+        // length of the user input is one character and the character is less than the random alphabet
+        if (this.userInput.length() == 1 && this.userInput.charAt(0) == this.randomAlphabet) {
+            System.out.println(this.userInput + " is a correct guess! YOU WIN");
+            System.out.println("You won after " + (getPlayer().tries) + " Tries");
+            return true;
+        } else if (this.userInput.length() == 1 && this.userInput.charAt(0) < this.randomAlphabet) {
+            if (this.isHint()) {
+                System.out.println(this.userInput + " is too low!");
+            }
+            this.decreaseNoOfGuesses();
+        } else {
+            if (this.isHint()) {
+                System.out.println(this.userInput + " Is too high!");
+            }
+            this.decreaseNoOfGuesses();
+        }
 
-    public void levelOne() {
-        this.setNoOfGuesses(5);
-        this.setHint(true);
-    }
-
-    @Override
-    public void levelTwo() {
-        this.setNoOfGuesses(4);
-        this.setHint(false);
-    }
-
-    @Override
-    public void levelThree() {
-        this.setNoOfGuesses(3);
-        this.setHint(false);
-    }
-
-    public void setHighScore() {
-        this.highScore = Collections.min(this.score);
-    }
-
-    @Override
-    public int getHighScore() {
-        // Get the minimum value in the score list
-        return this.highScore;
+        if (this.getNoOfGuesses() == 0) {
+            System.out.println("You Lose!");
+        }
+        return false;
     }
 
 }

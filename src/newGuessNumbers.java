@@ -30,21 +30,21 @@ public class newGuessNumbers extends Game {
             this.highScore++;
             return true;
         } else if (this.userInput > this.randomNumber) {
-            if (isHint) {
+            if (isHint()) {
                 System.out.println(this.userInput + " Is wrong! Your guess was too high\n");
             }
-            this.noOfGuesses--;
+            this.decreaseNoOfGuesses();
         } else {
             if (isHint) {
                 System.out.println(this.userInput + " Is wrong! Your guess was too low\n");
             }
-            this.noOfGuesses--;
+            this.decreaseNoOfGuesses();
         }
         return false;
     }
 
     @Override
-    public void setup() {
+    public void play() {
         int choice = 1;
         while (choice == 1) {
             int level;
@@ -62,7 +62,7 @@ public class newGuessNumbers extends Game {
                     levelFour();
                     System.out.print("Enter your choice: ");
                     choice = new Scanner(System.in).nextInt();
-                    noOfGuesses = 0;
+                    this.setNoOfGuesses(0);
                 }
                 default -> {
                     System.out.println("Invalid choice. Please enter a valid option.");
@@ -71,7 +71,7 @@ public class newGuessNumbers extends Game {
             }
             System.out.println(this.randomNumber);
             tries = 0;
-            while (noOfGuesses != 0 && level >= 1 && level <= 4) {
+            while (getNoOfGuesses() != 0 && level >= 1 && level <= 4) {
                 if (level == 1) {
                     System.out.print("Enter your guess from 1 to 15, ");
                 }
@@ -81,13 +81,13 @@ public class newGuessNumbers extends Game {
                 if (level == 3) {
                     System.out.print("Enter your guess from 1 to 40, ");
                 }
-                System.out.println("#" + noOfGuesses + " Chances left.");
+                System.out.println("#" + getNoOfGuesses() + " Chances left.");
                 getUserInput();
                 tries++;
                 if (isCorrectGuess()) {
                     break;
                 }
-                if (noOfGuesses == 0) {
+                if (getNoOfGuesses() == 0) {
                     System.out.println("You Lost the game, You are out of chances");
                 }
             }
@@ -118,14 +118,19 @@ public class newGuessNumbers extends Game {
         this.randomNumber = getRandomNumber(40) + 1;
     }
 
+
+//    public int getHighScore() {
+//        return this.highScore;
+//    }
+
     @Override
-    public int getHighScore() {
-        return this.highScore;
+    public void increaseTries() {
+        this.tries++;
     }
 
     @Override
-    public int increaseTries() {
-        return 0;
+    public void generateRandom() {
+
     }
 
 
@@ -201,7 +206,7 @@ public class newGuessNumbers extends Game {
             System.out.print("Enter your choice: ");
             int choice = new Scanner(System.in).nextInt();
             if (choice == 1) {
-                numbers.setup();
+                numbers.play();
             }
             else {
                 System.out.println("Invalid choice, try again");

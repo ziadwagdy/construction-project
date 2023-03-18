@@ -3,37 +3,44 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         GuessAlphabets alphabets = new GuessAlphabets();
+        GuessNumbers numbers = new GuessNumbers();
         while (true) {
-            System.out.println(
-                    """
-                            Welcome, play the game!
-                            Enter 1 for Alphabets
-                            Enter 2 for numbers
-                            Enter 3 for getting the high score
-                            Enter 4 for Credits
-                            Enter 5 to Exit"""
+            System.out.println("""
+                    Welcome, play the game!
+                    Enter 1 for Alphabets
+                    Enter 2 for numbers
+                    Enter 3 for getting the high score
+                    Enter 4 for Credits
+                    Enter 5 to Exit"""
             );
             Scanner input = new Scanner(System.in);
             int choice = input.nextInt();
-            if (choice == 5) {
-                break;
-            } else {
-                switch (choice) {
-                    case 1 -> {
-                        alphabets.setup();
+            switch (choice) {
+                case 1 -> alphabets.play();
+                case 2 -> numbers.play();
+                case 3 -> {
+                    if (Game.getPlayer().getNumbersHighScore() == 0) {
+                        System.out.println("Guessing Numbers is not played yet");
+                    } else {
+                        System.out.println("Your High Score in Numbers "
+                                + Game.getPlayer().getNumbersHighScore());
                     }
-                    case 2 -> {
-//                      numbers.setup();
-                        newGuessNumbers guessNumbers = new newGuessNumbers();
-                        guessNumbers.setup();
+
+                    if (Game.getPlayer().getAlphabetsHighScore() == 0) {
+                        System.out.println("Guessing Alphabets is not played yet");
+                    } else {
+                        System.out.println("Your High Score in Alphabets "
+                                + Game.getPlayer().getAlphabetsHighScore());
                     }
-                    case 3 -> {
-                        if (alphabets.getHighScore() == 0) {
-                            System.out.println("Play first please!");
-                        } else {
-                            System.out.println("Your High Score is " + alphabets.getHighScore());
-                        }
-                    }
+                }
+                case 4 -> {
+                    System.out.println("Printing Credits here");
+                    return;
+                }
+
+                case 5 -> {
+                    System.out.println("Thank you for playing the game, Goodbye <3");
+                    return;
                 }
             }
         }
