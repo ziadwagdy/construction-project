@@ -2,15 +2,15 @@ import java.util.Scanner;
 
 public abstract class Game {
     /**
-     * This statement creates a Player object named player that is static and final.
+     *  creates a Player object named player that is static and final.
      */
     private static final Player player = new Player();
     /**
-     * 'noOfGuesses' is an int field that tracks the number of guesses the player has left.
+     * noOfGuesses field is an int field that tracks the number of guesses the player has left.
      */
     private int noOfGuesses;
     /**
-     * 'isHint' is a boolean field that indicates whether the level has a hint.
+     * isHint field is a boolean field that indicates whether the level has a hint.
      */
     private boolean isHint;
 
@@ -34,19 +34,24 @@ public abstract class Game {
     }
 
     /**
-     * 'getPlayer()' is a static method that returns the player object.
+     * getPlayer()
+     * is a static method that returns the player object.
+     *
+     * @return player
      */
     public static Player getPlayer() {
         return player;
     }
 
     /**
-     * 'rangeMessage' is a String field that holds a message about the range of valid input values.
+     * rangeMessage field is a String that holds a message
+     * about the range of valid input values.
      */
     private String rangeMessage;
 
     /**
-     * 'isHint()' and 'setHint(boolean hint)' are methods that get and set the isHint field.
+     * isHint()
+     * method that get the isHint field.
      *
      * @return isHint
      */
@@ -56,7 +61,7 @@ public abstract class Game {
 
     /**
      * setHint()
-     * methods that set the isHint field.
+     * method that set the isHint field.
      *
      * @param hint can be a boolean(true, false)
      */
@@ -66,7 +71,7 @@ public abstract class Game {
 
     /**
      * getNoOfGuesses()
-     * methods that set the noOfGuesses field. can be a number(5, 4, 3)
+     * method that set the noOfGuesses field. can be a number(5, 4, 3)
      *
      * @return noOfGuesses
      */
@@ -85,14 +90,16 @@ public abstract class Game {
     }
 
     /**
-     * 'decreaseNoOfGuesses()' is a method that decrements the noOfGuesses field by 1.
+     * decreaseNoOfGuesses()
+     * is a method that decrements the noOfGuesses field by 1.
      */
     public void decreaseNoOfGuesses() {
         this.noOfGuesses--;
     }
 
     /**
-     * 'isCorrectGuess()' is an abstract method that checks whether the player's guess is correct.
+     * isCorrectGuess()
+     * is an abstract method that checks whether the player's guess is correct.
      */
     public abstract boolean isCorrectGuess();
 
@@ -112,6 +119,11 @@ public abstract class Game {
 
     public abstract void generateRandom();
 
+    /**
+     * handleChoice()
+     * A method that runs the game. It displays a menu to the player,
+     * reads the player's choice, and then calls the appropriate method based on the choice.
+     */
     public void handleChoice() {
         while (true) {
             this.noOfGuesses = 0;
@@ -154,25 +166,23 @@ public abstract class Game {
 
     /**
      * playGame()
-     * A method that runs the game. It displays a menu to the player,
-     * reads the player's choice, and then calls the appropriate method based on the choice.
-     * It then generates a random number or string, prompts the player for input,
-     * and checks whether the input is correct.
-     * If the input is incorrect, the player is prompted to guess again until the 'noOfGuesses' field reaches 0.
+     * A method that checks whether the chances are used all or not.
+     * If the chances are not done, the player is prompted to guess again
+     * until the 'noOfGuesses' field reaches 0.
      */
     public void playGame() {
         while (true) {
             if (this.getNoOfGuesses() != 0) {
                 System.out.println("Chance #" + this.getNoOfGuesses());
                 System.out.print("Enter your guess: ");
-               if (getUserInput()) {
-                   increaseTries();
-                   if (this.isCorrectGuess()) {
-                       this.play();
-                       // in case user won, and there is still chances
-                       break; // return to choose difficulty level
-                   }
-               }
+                if (getUserInput()) {
+                    increaseTries();
+                    if (this.isCorrectGuess()) {
+                        this.play();
+                        // in case user won, and there is still chances
+                        break; // return to choose difficulty level
+                    }
+                }
             } else if (this.getNoOfGuesses() == 0) {
                 this.play();
                 // User lost, and number of chances are 0

@@ -12,11 +12,11 @@ public class GuessNumbers extends Game {
      */
     private int userInput;
     /**
-     * randomNumber stores the randomly generated number.
+     * randomNumber field stores the randomly generated number.
      */
     private int randomNumber;
     /**
-     * bound represents the upper bound for the random number generation.
+     * bound field represents the upper bound for the random number generation.
      */
     private int bound = 1;
 
@@ -31,7 +31,7 @@ public class GuessNumbers extends Game {
     }
 
     /**
-     * setBound()
+     * getBound()
      * returns the upper bound for the random number generation.
      *
      * @return bound
@@ -188,6 +188,11 @@ public class GuessNumbers extends Game {
         }
     }
 
+    /**
+     * printHighScoreStatus()
+     * A function to get report of highScore for each model game,
+     * and prints a message.
+     */
     public void printHighScoreStatus() {
         if (Game.getPlayer().getNumbersHighScore() == 0) {
             System.out.println("Guessing Numbers is not played yet");

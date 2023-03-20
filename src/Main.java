@@ -25,7 +25,6 @@ public class Main {
                 case 2 -> alphabets.handleChoice();
                 case 3 -> {
                     // getting highScore status message
-
                     numbers.printHighScoreStatus();
                     alphabets.printHighScoreStatus();
                 }

@@ -194,7 +194,11 @@ public class GuessAlphabets extends Game {
         }
     }
 
-    // function to get report of highScore
+    /**
+     * printHighScoreStatus()
+     * A function to get report of highScore for each model game,
+     * and prints a message.
+     */
     public void printHighScoreStatus(){
         if (Game.getPlayer().getAlphabetsHighScore() == 0) {
             System.out.println("Guessing Alphabets is not played yet");
