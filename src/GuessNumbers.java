@@ -7,6 +7,9 @@ import java.util.Scanner;
  * It has several fields, methods, and overrides the methods of the parent class.
  */
 public class GuessNumbers extends Game {
+    /**
+     * userInput field stores the user's guess.
+     */
     private int userInput;
     /**
      * randomNumber stores the randomly generated number.

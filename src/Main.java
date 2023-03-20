@@ -30,11 +30,9 @@ public class Main {
                     alphabets.printHighScoreStatus();
                 }
                 case 4 -> {
-                    System.out.println("Printing Credits here");
-                    return;
+                    Game.getPlayer().printCredits();
                 }
                 case 5 -> {
-                    System.out.println("Thank you for playing the game, Goodbye <3");
                     return;
                 }
                 default -> {
@@ -43,17 +41,4 @@ public class Main {
             }
         }
     }
-
-//    public static String credits(){
-//        return "Zeyad Wagdy Abdelfattah Mohamed "+
-//                "Abullah Hatemoğlu " +
-//                "Noureldien Soltan";
-//    }
-
-    /* TODOO :
-        Check all the printed messages
-        update instructions (main menu)
-        add credits
-        add comments on not clear methods
-     */
 }
