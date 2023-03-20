@@ -5,42 +5,40 @@ public class Main {
         GuessAlphabets alphabets = new GuessAlphabets();
         GuessNumbers numbers = new GuessNumbers();
         while (true) {
-            System.out.println("""
-                    Welcome, play the game!
+            System.out.print("""
+                    _____________________________________________________________________
+                    Welcome to ZAN (the best guessing game in the world),play the game :
+                    -----
                     Enter 1 for numbers
                     Enter 2 for Alphabets
                     Enter 3 for getting the high score
                     Enter 4 for Credits
-                    Enter 5 to Exit"""
+                    Enter 5 to Exit
+                                        
+                    Enter you choose :  """
             );
             Scanner input = new Scanner(System.in);
             int choice = input.nextInt();
             switch (choice) {
-                case 1 -> numbers.play();
-                case 2 -> alphabets.play();
-                case 3 -> {
-                    if (Game.getPlayer().getNumbersHighScore() == 0) {
-                        System.out.println("Guessing Numbers is not played yet");
-                    } else {
-                        System.out.println("Your High Score in Numbers "
-                                + Game.getPlayer().getNumbersHighScore());
-                    }
+                case 1 -> numbers.handleChoice();
 
-                    if (Game.getPlayer().getAlphabetsHighScore() == 0) {
-                        System.out.println("Guessing Alphabets is not played yet");
-                    } else {
-                        System.out.println("Your High Score in Alphabets "
-                                + Game.getPlayer().getAlphabetsHighScore());
-                    }
+                case 2 -> alphabets.handleChoice();
+                case 3 -> {
+                    // getting highScore status message
+
+                    numbers.printHighScoreStatus();
+                    alphabets.printHighScoreStatus();
                 }
                 case 4 -> {
                     System.out.println("Printing Credits here");
                     return;
                 }
-
                 case 5 -> {
                     System.out.println("Thank you for playing the game, Goodbye <3");
                     return;
+                }
+                default -> {
+                    System.out.println("Invalid Option\n");
                 }
             }
         }
