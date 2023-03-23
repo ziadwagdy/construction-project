@@ -10,7 +10,7 @@ public class GuessAlphabets extends Game {
     /**
      * This field stores the user's guess.
      */
-    private String userInput;
+    private char userInput;
 
     /**
      * randomAlphabet field stores the randomly generated number.
@@ -19,7 +19,7 @@ public class GuessAlphabets extends Game {
 
     /**
      * bound field represents the upper bound for the random number generation.
-     * */
+     */
     private int bound = 1;
 
     /**
@@ -92,12 +92,12 @@ public class GuessAlphabets extends Game {
     @Override
     public boolean isCorrectGuess() {
         // length of the user input is one character and the character is less than the random alphabet
-        if (this.userInput.length() == 1 && this.userInput.charAt(0) == this.randomAlphabet) {
+        if (this.userInput == this.randomAlphabet) {
             System.out.println(this.userInput + " Is a correct guess, YOU WIN ✅");
             System.out.println("You won after " + (getPlayer().tries) + " Tries 🥳");
             Game.getPlayer().setLoserAlphabet(false);
             return true;
-        } else if (this.userInput.length() == 1 && this.userInput.charAt(0) < this.randomAlphabet) {
+        } else if (this.userInput < this.randomAlphabet) {
             if (this.isHint()) {
                 System.out.println("wrong! " + this.userInput + " Is Lower ❌");
             }
@@ -204,11 +204,16 @@ public class GuessAlphabets extends Game {
 
         if (input.hasNextInt()) {
             System.out.println("Invalid Input!");
-            return false;
         } else {
-            this.userInput = input.next().toLowerCase();
-            return true;
+            char c = input.next().toLowerCase().charAt(0);
+
+            if (c >= 'a' && c <= 'z') {
+                this.userInput = c;
+                return true;
+            } else
+                System.out.println("Invalid Input!");
         }
+        return false;
     }
 
     /**
@@ -216,7 +221,7 @@ public class GuessAlphabets extends Game {
      * A function to get report of highScore for each model game,
      * and prints a message.
      */
-    public void printHighScoreStatus(){
+    public void printHighScoreStatus() {
         if (Game.getPlayer().getAlphabetsHighScore() == 0) {
             System.out.println("Guessing Alphabets is not played yet");
         } else if (

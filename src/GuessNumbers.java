@@ -87,6 +87,7 @@ public class GuessNumbers extends Game {
      * If the user's input is higher than the randomNumber, it decreases the number
      * of guesses remaining and prints a message indicating that the input is higher.
      * If the input is lower, it does the same but prints a message indicating that the input is low
+     *
      * @return boolean (true, false)
      */
     @Override
