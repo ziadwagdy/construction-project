@@ -2,11 +2,12 @@ import java.util.Scanner;
 
 public abstract class Game {
     /**
-     *  creates a Player object named player that is static and final.
+     * creates a Player object named player that is static and final.
      */
     private static final Player player = new Player();
     /**
-     * noOfGuesses field is an int field that tracks the number of guesses the player has left.
+     * noOfGuesses field is an int field that tracks the number of guesses the
+     * player has left.
      */
     private int noOfGuesses;
     /**
@@ -15,8 +16,10 @@ public abstract class Game {
     private boolean isHint;
 
     /**
-     * The 'GAME_TYPE' enum represents two possible values: 'Numbers' and 'Alphabets'.
-     * This enum is used to indicate which type of guessing game the user wants to play.
+     * The 'GAME_TYPE' enum represents two possible values: 'Numbers' and
+     * 'Alphabets'.
+     * This enum is used to indicate which type of guessing game the user wants to
+     * play.
      */
     enum GAME_TYPE {
         Numbers,
@@ -25,7 +28,8 @@ public abstract class Game {
 
     /**
      * The LEVEL enum represents the levels of each type in the game.
-     * This enum is used to indicate the difficulty level of the game: 'Easy', 'Medium', and 'Hard'.
+     * This enum is used to indicate the difficulty level of the game: 'Easy',
+     * 'Medium', and 'Hard'.
      */
     enum LEVEL {
         Easy,
@@ -122,7 +126,8 @@ public abstract class Game {
     /**
      * handleChoice()
      * A method that runs the game. It displays a menu to the player,
-     * reads the player's choice, and then calls the appropriate method based on the choice.
+     * reads the player's choice, and then calls the appropriate method based on the
+     * choice.
      */
     public void handleChoice() {
         while (true) {
@@ -136,7 +141,8 @@ public abstract class Game {
                     3. Hard
                     4. Return to main menu
                     ===>\s""");
-            int choice = new Scanner(System.in).nextInt();
+            Scanner input = new Scanner(System.in);
+            int choice = input.nextInt();
             switch (choice) {
                 case 1 -> {
                     levelOne();
@@ -156,10 +162,10 @@ public abstract class Game {
                 case 4 -> {
                     return;
                 }
-                default -> {
+                default ->
                     // invalid option choose level again
                     System.out.println("Invalid option");
-                }
+
             }
         }
     }
@@ -237,15 +243,17 @@ public abstract class Game {
      **/
     public void getRangeAlphabet(String type, int bound, int chances) {
         char letter = (char) ('a' + bound);
-        String range = "Enter " + type + " in range from 'a' to '" + (char) (letter-1) +
+        String range = "Enter " + type + " in range from 'a' to '" + (char) (letter - 1) +
                 "' " + chances + " Chances left";
         this.setRangeMessage(range);
     }
 
     /**
      * getInstructions()
-     * creates a message that gives instructions to the player about how to play the game.
-     * It uses the getRangeMessage() method to include information about the range of valid input values.
+     * creates a message that gives instructions to the player about how to play the
+     * game.
+     * It uses the getRangeMessage() method to include information about the range
+     * of valid input values.
      *
      * @param type    can be String (Numbers, Alphabets)
      * @param chances can be an integer from (5, 4, 3)
@@ -254,18 +262,18 @@ public abstract class Game {
      **/
     public String getInstructions(String type, int chances, String level) {
         String instruction = """
-                                
-                Guess the\s""" + type + """ 
-                 : 
+
+                Guess the\s""" + type + """
+                 :
                 ------------------------------------------
                 Instructions:
                 1. Guess the\s""" + type + """
                  based on the given range.
                 2. You are allowed to make one guess at a time.
-                3. Each game has\s""" + chances + """ 
+                3. Each game has\s""" + chances + """
                  chances to guess the correct number.
                 4. Once you have used all your chances, you lose the game.
-                                
+
                 Good Luck!
                 """ + level + """
                 :

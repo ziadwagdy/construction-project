@@ -15,7 +15,7 @@ public class Main {
                     Enter 4 for Credits
                     Enter 5 to Exit
                                         
-                    Enter you choose :  """
+                    Enter you choose :\s"""
             );
             Scanner input = new Scanner(System.in);
             int choice = input.nextInt();
@@ -28,15 +28,13 @@ public class Main {
                     numbers.printHighScoreStatus();
                     alphabets.printHighScoreStatus();
                 }
-                case 4 -> {
-                    Game.getPlayer().printCredits();
-                }
+                case 4 -> Game.getPlayer().printCredits();
+
                 case 5 -> {
+                    System.out.println("Thank you for playing, we will wait for you!");
                     return;
                 }
-                default -> {
-                    System.out.println("Invalid Option\n");
-                }
+                default -> System.out.println("Invalid Option\n");
             }
         }
     }

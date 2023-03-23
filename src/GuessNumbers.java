@@ -196,21 +196,15 @@ public class GuessNumbers extends Game {
     public void printHighScoreStatus() {
         if (Game.getPlayer().getNumbersHighScore() == 0) {
             System.out.println("Guessing Numbers is not played yet");
-        } else if (Game.getPlayer().isLoserNumber() &&
-                Game.getPlayer().getNumbersHighScore() == 0) {
-            System.out.println("You played but you lost");
         } else if (
                 Game.getPlayer().isLoserNumber() &&
                         Game.getPlayer().getNumbersHighScore() != 0
         ) {
-            System.out.println("Your High Score in Numbers "
-                    + Game.getPlayer().getNumbersHighScore());
+            System.out.println("You played but you lost");
         } else {
             System.out.println("Your High Score in Numbers "
                     + Game.getPlayer().getNumbersHighScore());
         }
-
-
     }
 }
 

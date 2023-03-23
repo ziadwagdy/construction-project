@@ -127,12 +127,18 @@ public class GuessAlphabets extends Game {
         this.setNoOfGuesses(5);
         this.setHint(true);
         this.setBound(10);
-        this.getRangeAlphabet(String.valueOf(GAME_TYPE.Alphabets), getBound(), getNoOfGuesses());
+        this.getRangeAlphabet(
+                String.valueOf(GAME_TYPE.Alphabets),
+                getBound(),
+                getNoOfGuesses()
+        );
 
         System.out.println(
-                this.getInstructions(String.valueOf(GAME_TYPE.Alphabets),
+                this.getInstructions(
+                        String.valueOf(GAME_TYPE.Alphabets),
                         getNoOfGuesses(),
-                        String.valueOf(LEVEL.Easy))
+                        String.valueOf(LEVEL.Easy)
+                )
         );
     }
 
@@ -147,12 +153,18 @@ public class GuessAlphabets extends Game {
         this.setNoOfGuesses(4);
         this.setHint(false);
         this.setBound(17);
-        this.getRangeAlphabet(String.valueOf(GAME_TYPE.Alphabets), getBound(), getNoOfGuesses());
+        this.getRangeAlphabet(
+                String.valueOf(GAME_TYPE.Alphabets),
+                getBound(),
+                getNoOfGuesses()
+        );
 
         System.out.println(
-                this.getInstructions(String.valueOf(GAME_TYPE.Alphabets),
+                this.getInstructions(
+                        String.valueOf(GAME_TYPE.Alphabets),
                         getNoOfGuesses(),
-                        String.valueOf(LEVEL.Medium))
+                        String.valueOf(LEVEL.Medium)
+                )
         );
     }
 
@@ -167,12 +179,17 @@ public class GuessAlphabets extends Game {
         this.setNoOfGuesses(3);
         this.setHint(false);
         this.setBound(25);
-        this.getRangeAlphabet(String.valueOf(GAME_TYPE.Alphabets), getBound(), getNoOfGuesses());
+        this.getRangeAlphabet(String.valueOf(GAME_TYPE.Alphabets),
+                getBound(),
+                getNoOfGuesses()
+        );
 
         System.out.println(
-                this.getInstructions(String.valueOf(GAME_TYPE.Alphabets),
+                this.getInstructions(
+                        String.valueOf(GAME_TYPE.Alphabets),
                         getNoOfGuesses(),
-                        String.valueOf(LEVEL.Hard))
+                        String.valueOf(LEVEL.Hard)
+                )
         );
     }
 
@@ -206,8 +223,7 @@ public class GuessAlphabets extends Game {
                 Game.getPlayer().isLoserAlphabet() &&
                         Game.getPlayer().getAlphabetsHighScore() != 0
         ) {
-            System.out.println("Your High Score in Alphabets "
-                    + Game.getPlayer().getAlphabetsHighScore());
+            System.out.println("You played but you lost");
         } else {
             System.out.println("Your High Score in Alphabets "
                     + Game.getPlayer().getAlphabetsHighScore());
