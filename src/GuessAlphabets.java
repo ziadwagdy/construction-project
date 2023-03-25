@@ -4,7 +4,8 @@ import java.util.Scanner;
 /**
  * GuessAlphabets{}
  * This is a class named GuessAlphabets(), which extends the Game class.
- * It has several fields, methods, and overrides the methods of the parent class.
+ * It has several fields, methods, and overrides the methods of the parent
+ * class.
  */
 public class GuessAlphabets extends Game {
     /**
@@ -44,7 +45,8 @@ public class GuessAlphabets extends Game {
 
     /**
      * getRandomChar()
-     * generates a random character between a and the upper bound using the 'Random' class.
+     * generates a random character between a and the upper bound using the 'Random'
+     * class.
      *
      * @return int randomAlphabet (which will be referred to a char)
      */
@@ -65,37 +67,31 @@ public class GuessAlphabets extends Game {
         this.randomAlphabet = (char) getRandomChar();
     }
 
-    /**
-     * play()
-     * It checks if the player has any previous tries, and if so, updates their score.
-     * It then resets the tries variable to zero and calls the playGame() method,
-     * which is defined in the Game class.
-     */
-    @Override
-    public void play() {
-        if (getPlayer().tries != 0) {
-            getPlayer().setAlphabetsScore(getPlayer().tries);
-        }
-        getPlayer().tries = 0;
-    }
+
 
     /**
      * isCorrectGuess()
      * It checks if the user's input matches the randomAlphabet variable, and if so,
-     * prints a message to the console indicating that the user won and returns true.
-     * If the user's input is higher than the randomAlphabet, it decreases the number
-     * of guesses remaining and prints a message indicating that the input is higher.
-     * If the input is lower, it does the same but prints a message indicating that the input is lower
+     * prints a message to the console indicating that the user won and returns
+     * true.
+     * If the user's input is higher than the randomAlphabet, it decreases the
+     * number
+     * of guesses remaining and prints a message indicating that the input is
+     * higher.
+     * If the input is lower, it does the same but prints a message indicating that
+     * the input is lower
      *
      * @return boolean (true, false)
      */
     @Override
     public boolean isCorrectGuess() {
-        // length of the user input is one character and the character is less than the random alphabet
+        // length of the user input is one character and the character is less than the
+        // random alphabet
         if (this.userInput == this.randomAlphabet) {
-            System.out.println(this.userInput + " Is a correct guess, YOU WIN ✅");
+            System.out.println(this.userInput + " Is a correct guess, congrats amigos ✅");
             System.out.println("You won after " + (getPlayer().tries) + " Tries 🥳");
             Game.getPlayer().setLoserAlphabet(false);
+            getPlayer().setAlphabetsScore(getPlayer().tries);
             return true;
         } else if (this.userInput < this.randomAlphabet) {
             if (this.isHint()) {
@@ -111,7 +107,7 @@ public class GuessAlphabets extends Game {
 
         if (this.getNoOfGuesses() == 0) {
             Game.getPlayer().setLoserAlphabet(true);
-            System.out.println("You Lose! 🥲");
+            System.out.println("You Lost!");
             return false;
         }
         return false;
@@ -130,16 +126,13 @@ public class GuessAlphabets extends Game {
         this.getRangeAlphabet(
                 String.valueOf(GAME_TYPE.Alphabets),
                 getBound(),
-                getNoOfGuesses()
-        );
+                getNoOfGuesses());
 
         System.out.println(
                 this.getInstructions(
                         String.valueOf(GAME_TYPE.Alphabets),
                         getNoOfGuesses(),
-                        String.valueOf(LEVEL.Easy)
-                )
-        );
+                        String.valueOf(LEVEL.Easy)));
     }
 
     /**
@@ -156,16 +149,13 @@ public class GuessAlphabets extends Game {
         this.getRangeAlphabet(
                 String.valueOf(GAME_TYPE.Alphabets),
                 getBound(),
-                getNoOfGuesses()
-        );
+                getNoOfGuesses());
 
         System.out.println(
                 this.getInstructions(
                         String.valueOf(GAME_TYPE.Alphabets),
                         getNoOfGuesses(),
-                        String.valueOf(LEVEL.Medium)
-                )
-        );
+                        String.valueOf(LEVEL.Medium)));
     }
 
     /**
@@ -181,22 +171,20 @@ public class GuessAlphabets extends Game {
         this.setBound(25);
         this.getRangeAlphabet(String.valueOf(GAME_TYPE.Alphabets),
                 getBound(),
-                getNoOfGuesses()
-        );
+                getNoOfGuesses());
 
         System.out.println(
                 this.getInstructions(
                         String.valueOf(GAME_TYPE.Alphabets),
                         getNoOfGuesses(),
-                        String.valueOf(LEVEL.Hard)
-                )
-        );
+                        String.valueOf(LEVEL.Hard)));
     }
 
     /**
      * getUserInput()
      * overrides the getUserInput() method in the Game class, prompts the user to
-     * input a character, and sets the userInput instance variable to the user's input.
+     * input a character, and sets the userInput instance variable to the user's
+     * input.
      */
     @Override
     public boolean getUserInput() {
@@ -221,19 +209,20 @@ public class GuessAlphabets extends Game {
      * A function to get report of highScore for each model game,
      * and prints a message.
      */
-    public void printHighScoreStatus() {
-        if (Game.getPlayer().getAlphabetsHighScore() == 0) {
-            System.out.println("Guessing Alphabets is not played yet");
-        } else if (
-                Game.getPlayer().isLoserAlphabet() &&
-                        Game.getPlayer().getAlphabetsHighScore() != 0
-        ) {
-            System.out.println("You played but you lost");
-        } else {
-            System.out.println("Your High Score in Alphabets "
+
+     public void printHighScoreStatus() {
+        if (Game.getPlayer().isLoserAlphabet()
+                && Game.getPlayer().getAlphabetsHighScore() == 0) {
+            System.out.println("You didn't have a high score yet.");
+        } else if (!(Game.getPlayer().isLoserAlphabet())
+                && Game.getPlayer().getAlphabetsHighScore() != 0) {
+            System.out.println("Your High Score in Guessing Alphabets is: "
                     + Game.getPlayer().getAlphabetsHighScore());
+        } else if (Game.getPlayer().getAlphabetsHighScore() == 0) {
+            System.out.println("Guessing Alphabets is not played yet");
+        } else {
+            System.out.println("Your High Score in Guessing Alphabets is: "
+            + Game.getPlayer().getAlphabetsHighScore());
         }
     }
 }
-
-

@@ -107,7 +107,6 @@ public abstract class Game {
      */
     public abstract boolean isCorrectGuess();
 
-    public abstract void play();
 
     public abstract boolean getUserInput();
 
@@ -184,13 +183,13 @@ public abstract class Game {
                 if (getUserInput()) {
                     increaseTries();
                     if (this.isCorrectGuess()) {
-                        this.play();
+                        getPlayer().tries = 0;
                         // in case user won, and there is still chances
                         break; // return to choose difficulty level
                     }
                 }
             } else if (this.getNoOfGuesses() == 0) {
-                this.play();
+                getPlayer().tries = 0;
                 // User lost, and number of chances are 0
                 break; // return to choose difficulty level
             }

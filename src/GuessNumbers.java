@@ -4,7 +4,8 @@ import java.util.Scanner;
 /**
  * GuessNumbers Class
  * This is a class named GuessNumbers(), which extends the Game class.
- * It has several fields, methods, and overrides the methods of the parent class.
+ * It has several fields, methods, and overrides the methods of the parent
+ * class.
  */
 public class GuessNumbers extends Game {
     /**
@@ -64,38 +65,27 @@ public class GuessNumbers extends Game {
         this.randomNumber = getRandomNumber();
     }
 
-    /**
-     * play()
-     * It checks if the player has any previous tries,
-     * and if so, updates their score.
-     * It then resets the tries variable to zero
-     * and calls the playGame() method,
-     * which is defined in the Game class.
-     */
-    @Override
-    public void play() {
-        if (getPlayer().tries != 0) {
-            getPlayer().setNumbersScore(getPlayer().tries);
-        }
-        getPlayer().tries = 0;
-    }
 
     /**
      * isCorrectGuess()
      * It checks if the user's input matches the randomNumber variable, and if so,
-     * prints a message to the console indicating that the user won and returns true.
+     * prints a message to the console indicating that the user won and returns
+     * true.
      * If the user's input is higher than the randomNumber, it decreases the number
-     * of guesses remaining and prints a message indicating that the input is higher.
-     * If the input is lower, it does the same but prints a message indicating that the input is low
+     * of guesses remaining and prints a message indicating that the input is
+     * higher.
+     * If the input is lower, it does the same but prints a message indicating that
+     * the input is low
      *
      * @return boolean (true, false)
      */
     @Override
     public boolean isCorrectGuess() {
         if (this.userInput == this.randomNumber) {
-            System.out.println(this.userInput + " Is a correct guess, YOU WIN ✅");
+            System.out.println(this.userInput + " Is a correct guess,  congrats amigos ✅");
             System.out.println("You won after " + (getPlayer().tries) + " Tries 🥳");
             Game.getPlayer().setLoserNumber(false);
+            getPlayer().setNumbersScore(getPlayer().tries);
             return true;
         } else if (this.userInput > this.randomNumber) {
             if (this.isHint()) {
@@ -110,7 +100,7 @@ public class GuessNumbers extends Game {
         }
         if (this.getNoOfGuesses() == 0) {
             Game.getPlayer().setLoserNumber(true);
-            System.out.println("You Lose! 🥲");
+            System.out.println("You Lost!");
         }
         return false;
     }
@@ -129,8 +119,7 @@ public class GuessNumbers extends Game {
         System.out.println(
                 this.getInstructions(String.valueOf(GAME_TYPE.Numbers),
                         getNoOfGuesses(),
-                        String.valueOf(LEVEL.Easy))
-        );
+                        String.valueOf(LEVEL.Easy)));
     }
 
     /**
@@ -148,8 +137,7 @@ public class GuessNumbers extends Game {
         System.out.println(
                 this.getInstructions(String.valueOf(GAME_TYPE.Numbers),
                         getNoOfGuesses(),
-                        String.valueOf(LEVEL.Medium))
-        );
+                        String.valueOf(LEVEL.Medium)));
     }
 
     /**
@@ -167,8 +155,7 @@ public class GuessNumbers extends Game {
         System.out.println(
                 this.getInstructions(String.valueOf(GAME_TYPE.Numbers),
                         getNoOfGuesses(),
-                        String.valueOf(LEVEL.Hard))
-        );
+                        String.valueOf(LEVEL.Hard)));
     }
 
     /**
@@ -194,19 +181,20 @@ public class GuessNumbers extends Game {
      * A function to get report of highScore for each model game,
      * and prints a message.
      */
+
     public void printHighScoreStatus() {
-        if (Game.getPlayer().getNumbersHighScore() == 0) {
-            System.out.println("Guessing Numbers is not played yet");
-        } else if (
-                Game.getPlayer().isLoserNumber() &&
-                        Game.getPlayer().getNumbersHighScore() != 0
-        ) {
-            System.out.println("You played but you lost");
-        } else {
-            System.out.println("Your High Score in Numbers "
+        if (Game.getPlayer().isLoserNumber()
+                && Game.getPlayer().getNumbersHighScore() == 0) {
+            System.out.println("You didn't have a high score yet.");
+        } else if (!(Game.getPlayer().isLoserNumber())
+                && Game.getPlayer().getNumbersHighScore() != 0) {
+            System.out.println("Your High Score in Guessing Numbers is: "
                     + Game.getPlayer().getNumbersHighScore());
+        } else if (Game.getPlayer().getNumbersHighScore() == 0) {
+            System.out.println("Guessing Numbers is not played yet");
+        } else {
+            System.out.println("Your High Score in Guessing Numbers is: "
+            + Game.getPlayer().getNumbersHighScore());
         }
     }
 }
-
-
