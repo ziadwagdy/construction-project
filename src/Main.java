@@ -14,14 +14,12 @@ public class Main {
                     Enter 3 for getting the high score
                     Enter 4 for Credits
                     Enter 5 to Exit
-                                        
-                    Enter you choose :\s"""
+                    Enter you choice :\s"""
             );
             Scanner input = new Scanner(System.in);
             int choice = input.nextInt();
             switch (choice) {
                 case 1 -> numbers.handleChoice();
-
                 case 2 -> alphabets.handleChoice();
                 case 3 -> {
                     // getting highScore status message

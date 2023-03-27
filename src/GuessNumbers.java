@@ -83,7 +83,7 @@ public class GuessNumbers extends Game {
     public boolean isCorrectGuess() {
         if (this.userInput == this.randomNumber) {
             System.out.println(this.userInput + " Is a correct guess,  congrats amigos ✅");
-            System.out.println("You won after " + (getPlayer().tries) + " Tries 🥳");
+            System.out.println("You won after " + (getPlayer().tries) + " Try/Tries 🥳");
             Game.getPlayer().setLoserNumber(false);
             getPlayer().setNumbersScore(getPlayer().tries);
             return true;

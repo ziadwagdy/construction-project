@@ -89,7 +89,7 @@ public class GuessAlphabets extends Game {
         // random alphabet
         if (this.userInput == this.randomAlphabet) {
             System.out.println(this.userInput + " Is a correct guess, congrats amigos ✅");
-            System.out.println("You won after " + (getPlayer().tries) + " Tries 🥳");
+            System.out.println("You won after " + (getPlayer().tries) + " Try/Tries 🥳");
             Game.getPlayer().setLoserAlphabet(false);
             getPlayer().setAlphabetsScore(getPlayer().tries);
             return true;
