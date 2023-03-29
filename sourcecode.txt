@@ -1,0 +1,908 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+
+    public static abstract class Game {
+
+        /**
+         * creates a Player object named player that is static and final.
+         */
+        private static final Player player = new Player();
+        /**
+         * noOfGuesses field is an int field that tracks the number of guesses
+         * the player has left.
+         */
+        private int noOfGuesses;
+        /**
+         * isHint field is a boolean field that indicates whether the level has
+         * a hint.
+         */
+        private boolean isHint;
+
+        /**
+         * The 'GAME_TYPE' enum represents two possible values: 'Numbers' and
+         * 'Alphabets'. This enum is used to indicate which type of guessing
+         * game the user wants to play.
+         */
+        enum GAME_TYPE {
+            Numbers,
+            Alphabets,
+        }
+
+        /**
+         * The LEVEL enum represents the levels of each type in the game. This
+         * enum is used to indicate the difficulty level of the game: 'Easy',
+         * 'Medium', and 'Hard'.
+         */
+        enum LEVEL {
+            Easy,
+            Medium,
+            Hard,
+        }
+
+        /**
+         * getPlayer() is a static method that returns the player object.
+         *
+         * @return player
+         */
+        public static Player getPlayer() {
+            return player;
+        }
+
+        /**
+         * rangeMessage field is a String that holds a message about the range
+         * of valid input values.
+         */
+        private String rangeMessage;
+
+        /**
+         * isHint() method that get the isHint field.
+         *
+         * @return isHint
+         */
+        public boolean isHint() {
+            return isHint;
+        }
+
+        /**
+         * setHint() method that set the isHint field.
+         *
+         * @param hint can be a boolean(true, false)
+         */
+        public void setHint(boolean hint) {
+            isHint = hint;
+        }
+
+        /**
+         * getNoOfGuesses() method that set the noOfGuesses field. can be a
+         * number(5, 4, 3)
+         *
+         * @return noOfGuesses
+         */
+        public int getNoOfGuesses() {
+            return noOfGuesses;
+        }
+
+        /**
+         * setNoOfGuesses() methods that set the noOfGuesses field.
+         *
+         * @param noOfGuesses can be a number(5, 4, 3)
+         */
+        public void setNoOfGuesses(int noOfGuesses) {
+            this.noOfGuesses = noOfGuesses;
+        }
+
+        /**
+         * decreaseNoOfGuesses() is a method that decrements the noOfGuesses
+         * field by 1.
+         */
+        public void decreaseNoOfGuesses() {
+            this.noOfGuesses--;
+        }
+
+        /**
+         * isCorrectGuess() is an abstract method that checks whether the
+         * player's guess is correct.
+         */
+        public abstract boolean isCorrectGuess();
+
+        public abstract boolean getUserInput();
+
+        public abstract void levelOne();
+
+        public abstract void levelTwo();
+
+        public abstract void levelThree();
+
+        public void increaseTries() {
+            player.tries++;
+        }
+
+        public abstract void generateRandom();
+
+        /**
+         * handleChoice() A method that runs the game. It displays a menu to the
+         * player, reads the player's choice, and then calls the appropriate
+         * method based on the choice.
+         */
+        public void handleChoice() {
+            while (true) {
+                this.noOfGuesses = 0;
+                System.out.print("""
+                    Start Menu :
+                    -----------
+                    Select a difficulty level
+                    1. Easy
+                    2. Medium
+                    3. Hard
+                    4. Return to main menu
+                    ===>\s""");
+                Scanner input = new Scanner(System.in);
+                int choice = input.nextInt();
+                switch (choice) {
+                    case 1 -> {
+                        levelOne();
+                        generateRandom();
+                        playGame();
+                    }
+                    case 2 -> {
+                        levelTwo();
+                        generateRandom();
+                        playGame();
+                    }
+                    case 3 -> {
+                        levelThree();
+                        generateRandom();
+                        playGame();
+                    }
+                    case 4 -> {
+                        return;
+                    }
+                    default ->
+                        // invalid option choose level again
+                        System.out.println("Invalid option");
+
+                }
+            }
+        }
+
+        /**
+         * playGame() A method that checks whether the chances are used all or
+         * not. If the chances are not done, the player is prompted to guess
+         * again until the 'noOfGuesses' field reaches 0.
+         */
+        public void playGame() {
+            while (true) {
+                if (this.getNoOfGuesses() != 0) {
+                    System.out.println("Chance #" + this.getNoOfGuesses());
+                    System.out.print("Enter your guess: ");
+                    if (getUserInput()) {
+                        increaseTries();
+                        if (this.isCorrectGuess()) {
+                            getPlayer().tries = 0;
+                            // in case user won, and there is still chances
+                            break; // return to choose difficulty level
+                        }
+                    }
+                } else if (this.getNoOfGuesses() == 0) {
+                    getPlayer().tries = 0;
+                    // User lost, and number of chances are 0
+                    break; // return to choose difficulty level
+                }
+            }
+        }
+
+        /**
+         * setRangeMessage() methods that set the rangeMessage field.
+         *
+         * @param range can be a number(15, 25, 40)
+         */
+        private void setRangeMessage(String range) {
+            this.rangeMessage = range;
+        }
+
+        /**
+         * getRangeMessage() methods that get the rangeMessage field.
+         *
+         * @return rangeMessage
+         */
+        private String getRangeMessage() {
+            return this.rangeMessage;
+        }
+
+        /**
+         * getRange() creates a message about the range of valid input values
+         * and sets it to the rangeMessage field
+         *
+         * @param type can be (Alphabets or Numbers)
+         * @param bound can be an integer from (15, 25, 40)
+         * @param chances can be (5, 4, 3)
+         *
+         */
+        public void getRange(String type, int bound, int chances) {
+            String range = "Enter guess " + type + " from 1 to " + bound
+                    + ". " + chances + " Chances left";
+            this.setRangeMessage(range);
+        }
+
+        /**
+         * getRangeAlphabet() creates a message about alphabet range of valid
+         * input values and sets it to the rangeMessage field
+         *
+         * @param type can be (Alphabets)
+         * @param bound can be a character from (a, j)
+         * @param chances can be an integer from (5, 4, 3)
+         *
+         */
+        public void getRangeAlphabet(String type, int bound, int chances) {
+            char letter = (char) ('a' + bound);
+            String range = "Enter " + type + " in range from 'a' to '" + (char) (letter - 1)
+                    + "' " + chances + " Chances left";
+            this.setRangeMessage(range);
+        }
+
+        /**
+         * getInstructions() creates a message that gives instructions to the
+         * player about how to play the game. It uses the getRangeMessage()
+         * method to include information about the range of valid input values.
+         *
+         * @param type can be String (Numbers, Alphabets)
+         * @param chances can be an integer from (5, 4, 3)
+         * @param level can be a String (easy, medium, hard)
+         * @return sum of instruction + range
+         *
+         */
+        public String getInstructions(String type, int chances, String level) {
+            String instruction = """
+
+                Guess the\s""" + type + """
+                 :
+                ------------------------------------------
+                Instructions:
+                1. Guess the\s""" + type + """
+                 based on the given range.
+                2. You are allowed to make one guess at a time.
+                3. Each game has\s""" + chances + """
+                 chances to guess the correct number.
+                4. Once you have used all your chances, you lose the game.
+
+                Good Luck!
+                """ + level + """
+                :
+                """;
+
+            String range = getRangeMessage();
+
+            return instruction + range;
+        }
+    }
+
+    public static class Player {
+
+        /**
+         * tries field that keeps track of the number of tries the player has
+         * made.
+         *
+         */
+        int tries;
+
+        /**
+         * numbersHighScore field that keeps track of the number of tries the
+         * player has made.
+         *
+         */
+        int numbersHighScore;
+
+        /**
+         * alphabetsHighScore field that keeps track of the number of tries the
+         * player has made.
+         *
+         */
+        int alphabetsHighScore;
+
+        /**
+         * isLoserNumber field is a boolean field that indicates whether the
+         * user has lost in guessing numbers game.
+         */
+        private boolean isLoserNumber;
+
+        /**
+         * isLoserAlphabet field is a boolean field that indicates whether the
+         * user has lost in guessing alphabets game.
+         */
+        private boolean isLoserAlphabet;
+
+        /**
+         * numbersScore is an arrayList object of integers that keeps track of
+         * the player's scores for guessing numbers.
+         *
+         */
+        ArrayList<Integer> numbersScore = new ArrayList<>();
+
+        /**
+         * alphabetsScore is an arrayList object of integers that keeps track of
+         * the player's scores for guessing alphabets.
+         *
+         */
+        ArrayList<Integer> alphabetsScore = new ArrayList<>();
+
+        /**
+         * Player() A constructor that initializes the 'numbersHighScore' and
+         * 'alphabetsHighScore' fields with zero.
+         */
+        public Player() {
+            this.numbersHighScore = 0;
+            this.alphabetsHighScore = 0;
+        }
+
+        /**
+         * getNumbersHighScore() A method that returns the player's high score
+         * for guessing numbers.
+         *
+         * @return numbersHighScore
+         */
+        public int getNumbersHighScore() {
+            return numbersHighScore;
+        }
+
+        /**
+         * setNumbersHighScore() A method that sets the numbersHighScore
+         * variable to the minimum score in the numbersScore ArrayList.
+         */
+        public void setNumbersHighScore() {
+            this.numbersHighScore = Collections.min(getNumbersScore());
+        }
+
+        /**
+         * getAlphabetsHighScore() A method that returns the player's high score
+         * for guessing alphabets.
+         *
+         * @return alphabetsHighScore
+         */
+        public int getAlphabetsHighScore() {
+            return alphabetsHighScore;
+        }
+
+        /**
+         * setAlphabetsHighScore() A method that sets the alphabetsHighScore
+         * variable to the minimum score in the alphabetsScore ArrayList.
+         */
+        public void setAlphabetsHighScore() {
+            this.alphabetsHighScore = Collections.min(getAlphabetsScore());
+        }
+
+        /**
+         * getNumbersScore() A method that returns the numbersScore ArrayList.
+         *
+         * @return numbersScore
+         */
+        public ArrayList<Integer> getNumbersScore() {
+            return numbersScore;
+        }
+
+        /**
+         * setNumbersScore() A method that adds a score to the numbersScore
+         * ArrayList and sets the 'numbersHighScore' variable to the minimum
+         * score in the ArrayList.
+         */
+        public void setNumbersScore(int score) {
+            this.numbersScore.add(score);
+            setNumbersHighScore();
+        }
+
+        /**
+         * getAlphabetsScore() A method that returns the alphabetsScore
+         * ArrayList.
+         *
+         */
+        public ArrayList<Integer> getAlphabetsScore() {
+            return alphabetsScore;
+        }
+
+        /**
+         * setAlphabetsScore() A method that adds a score to the alphabetsScore
+         * ArrayList and sets the alphabetsHighScore variable to the minimum
+         * score in the ArrayList.
+         */
+        public void setAlphabetsScore(int score) {
+            this.alphabetsScore.add(score);
+            this.setAlphabetsHighScore();
+        }
+
+        /**
+         * isLoserNumber() method that get the isLoserNumber field.
+         *
+         * @return isLoserNumber
+         */
+        public boolean isLoserNumber() {
+            return isLoserNumber;
+        }
+
+        /**
+         * setLoserNumber() method that set the isHint isLoserNumber.
+         *
+         * @param loserNumber can be a boolean(true, false)
+         */
+        public void setLoserNumber(boolean loserNumber) {
+            isLoserNumber = loserNumber;
+        }
+
+        /**
+         * isLoserAlphabet() method that get the isLoserAlphabet field.
+         *
+         * @return isLoserAlphabet
+         */
+        public boolean isLoserAlphabet() {
+            return isLoserAlphabet;
+        }
+
+        /**
+         * setLoserAlphabet() method that set the isHint isLoserAlphabet.
+         *
+         * @param loserAlphabet can be a boolean(true, false)
+         */
+        public void setLoserAlphabet(boolean loserAlphabet) {
+            isLoserAlphabet = loserAlphabet;
+        }
+
+        /**
+         * printCredits() A method prints the credits
+         */
+        public void printCredits() {
+            System.out.println(
+                    """
+                        Name : Zeyad Wagdy Abdelfattah Mohamed ID : 210209957 Department : SE
+                        Name : Abdallah Hatemoğlu ID : 200209992 Department : SE
+                        Name : Noureldien Soltan Abdelrahman Ahmed ID : 210209980 Department : SE
+                        Name : Khaled Shihadeh ID : 200209396 Department : SE
+                        Name : SHAHBELDIN MOKHTAR ID : 190209997 Department : SE
+                        Name : Leen Alshouha ID : 210209448 Department : SE
+                        Name : Shiza Khan ID : 200209395 Department : SE
+                                """
+            );
+        }
+    }
+
+    public static class GuessNumbers extends Game {
+
+        /**
+         * userInput field stores the user's guess.
+         */
+        private int userInput;
+        /**
+         * randomNumber field stores the randomly generated number.
+         */
+        private int randomNumber;
+        /**
+         * bound field represents the upper bound for the random number
+         * generation.
+         */
+        private int bound = 1;
+
+        /**
+         * setBound() sets the upper bound for the random number generation.
+         *
+         * @param bound can be a number(10, 25, 40)
+         */
+        public void setBound(int bound) {
+            this.bound = bound;
+        }
+
+        /**
+         * getBound() returns the upper bound for the random number generation.
+         *
+         * @return bound
+         */
+        public int getBound() {
+            return bound;
+        }
+
+        /**
+         * getRandomNumber() generates a random number between 1 and the upper
+         * bound using the 'Random' class.
+         *
+         * @return int randomNumber
+         */
+        public int getRandomNumber() {
+            Random random = new Random();
+            return random.nextInt(getBound()) + 1;
+        }
+
+        /**
+         * generateRandom() sets the randomNumber instance variable to a new
+         * random number generated by calling the getRandomNumber() method, and
+         * prints the value of the randomNumber variable to the console.
+         */
+        @Override
+        public void generateRandom() {
+            this.randomNumber = getRandomNumber();
+        }
+
+        /**
+         * isCorrectGuess() It checks if the user's input matches the
+         * randomNumber variable, and if so, prints a message to the console
+         * indicating that the user won and returns true. If the user's input is
+         * higher than the randomNumber, it decreases the number of guesses
+         * remaining and prints a message indicating that the input is higher.
+         * If the input is lower, it does the same but prints a message
+         * indicating that the input is low
+         *
+         * @return boolean (true, false)
+         */
+        @Override
+        public boolean isCorrectGuess() {
+            if (this.userInput == this.randomNumber) {
+                System.out.println(this.userInput + " Is a correct guess,  congrats amigos ✅");
+                System.out.println("You won after " + (getPlayer().tries) + " Try/Tries 🥳");
+                Game.getPlayer().setLoserNumber(false);
+                getPlayer().setNumbersScore(getPlayer().tries);
+                return true;
+            } else if (this.userInput > this.randomNumber) {
+                if (this.isHint()) {
+                    System.out.println("wrong! " + this.userInput + " Is higher ❌");
+                }
+                this.decreaseNoOfGuesses();
+            } else {
+                if (this.isHint()) {
+                    System.out.println("wrong! " + this.userInput + " Is Lower ❌");
+                }
+                this.decreaseNoOfGuesses();
+            }
+            if (this.getNoOfGuesses() == 0) {
+                Game.getPlayer().setLoserNumber(true);
+                System.out.println("You Lost!");
+            }
+            return false;
+        }
+
+        /**
+         * levelOne() sets the game parameters for level, including the number
+         * of guesses, hint availability, and the upper bound of the range. It
+         * then prints game instructions to the console.
+         */
+        public void levelOne() {
+            this.setNoOfGuesses(5);
+            this.setHint(true);
+            this.setBound(15);
+            this.getRange(String.valueOf(Game.GAME_TYPE.Numbers), getBound(), getNoOfGuesses());
+            System.out.println(
+                    this.getInstructions(String.valueOf(Game.GAME_TYPE.Numbers),
+                            getNoOfGuesses(),
+                            String.valueOf(Game.LEVEL.Easy)));
+        }
+
+        /**
+         * levelTwo() sets the game parameters for level, including the number
+         * of guesses, hint availability, and the upper bound of the range. It
+         * then prints game instructions to the console.
+         */
+        @Override
+        public void levelTwo() {
+            this.setNoOfGuesses(4);
+            this.setHint(false);
+            this.setBound(25);
+            this.getRange(String.valueOf(Game.GAME_TYPE.Numbers), getBound(), getNoOfGuesses());
+            System.out.println(
+                    this.getInstructions(String.valueOf(Game.GAME_TYPE.Numbers),
+                            getNoOfGuesses(),
+                            String.valueOf(Game.LEVEL.Medium)));
+        }
+
+        /**
+         * levelThree() sets the game parameters for level, including the number
+         * of guesses, hint availability, and the upper bound of the range. It
+         * then prints game instructions to the console.
+         */
+        @Override
+        public void levelThree() {
+            this.setNoOfGuesses(3);
+            this.setHint(false);
+            this.setBound(40);
+            this.getRange(String.valueOf(Game.GAME_TYPE.Numbers), getBound(), getNoOfGuesses());
+            System.out.println(
+                    this.getInstructions(String.valueOf(Game.GAME_TYPE.Numbers),
+                            getNoOfGuesses(),
+                            String.valueOf(Game.LEVEL.Hard)));
+        }
+
+        /**
+         * getUserInput() overrides the getUserInput() method in the Game class,
+         * prompts the user to input a number, and sets the userInput instance
+         * variable to the user's input.
+         */
+        @Override
+        public boolean getUserInput() {
+            Scanner input = new Scanner(System.in);
+            if (input.hasNextInt()) {
+                this.userInput = input.nextInt();
+                return true;
+            } else {
+                System.out.println("Invalid Input!");
+                return false;
+            }
+        }
+
+        /**
+         * printHighScoreStatus() A function to get report of highScore for each
+         * model game, and prints a message.
+         */
+        public void printHighScoreStatus() {
+            if (Game.getPlayer().isLoserNumber()
+                    && Game.getPlayer().getNumbersHighScore() == 0) {
+                System.out.println("You didn't have a high score yet.");
+            } else if (!(Game.getPlayer().isLoserNumber())
+                    && Game.getPlayer().getNumbersHighScore() != 0) {
+                System.out.println("Your High Score in Guessing Numbers is: "
+                        + Game.getPlayer().getNumbersHighScore());
+            } else if (Game.getPlayer().getNumbersHighScore() == 0) {
+                System.out.println("Guessing Numbers is not played yet");
+            } else {
+                System.out.println("Your High Score in Guessing Numbers is: "
+                        + Game.getPlayer().getNumbersHighScore());
+            }
+        }
+    }
+
+    /**
+     * GuessAlphabets{} This is a class named GuessAlphabets(), which extends
+     * the Game class. It has several fields, methods, and overrides the methods
+     * of the parent class.
+     */
+    public static class GuessAlphabets extends Game {
+
+        /**
+         * This field stores the user's guess.
+         */
+        private char userInput;
+
+        /**
+         * randomAlphabet field stores the randomly generated number.
+         */
+        private char randomAlphabet;
+
+        /**
+         * bound field represents the upper bound for the random number
+         * generation.
+         */
+        private int bound = 1;
+
+        /**
+         * setBound() sets the upper bound for the random alphabet generation.
+         *
+         * @param bound can be a character(j, q, z)
+         */
+        public void setBound(int bound) {
+            this.bound = bound;
+        }
+
+        /**
+         * getBound() returns the upper bound for the random alphabet
+         * generation.
+         *
+         * @return bound
+         */
+        public int getBound() {
+            return bound;
+        }
+
+        /**
+         * getRandomChar() generates a random character between a and the upper
+         * bound using the 'Random' class.
+         *
+         * @return int randomAlphabet (which will be referred to a char)
+         */
+        public int getRandomChar() {
+            Random rand = new Random();
+            randomAlphabet = (char) (rand.nextInt(getBound()) + 'a');
+            return randomAlphabet;
+        }
+
+        /**
+         * generateRandom() sets the randomAlphabet instance variable to a new
+         * random char generated by calling the getRandomChar() method, and
+         * prints the value of the randomAlphabet variable to the console.
+         */
+        @Override
+        public void generateRandom() {
+            this.randomAlphabet = (char) getRandomChar();
+        }
+
+        /**
+         * isCorrectGuess() It checks if the user's input matches the
+         * randomAlphabet variable, and if so, prints a message to the console
+         * indicating that the user won and returns true. If the user's input is
+         * higher than the randomAlphabet, it decreases the number of guesses
+         * remaining and prints a message indicating that the input is higher.
+         * If the input is lower, it does the same but prints a message
+         * indicating that the input is lower
+         *
+         * @return boolean (true, false)
+         */
+        @Override
+        public boolean isCorrectGuess() {
+            // length of the user input is one character and the character is less than the
+            // random alphabet
+            if (this.userInput == this.randomAlphabet) {
+                System.out.println(this.userInput + " Is a correct guess, congrats amigos ✅");
+                System.out.println("You won after " + (getPlayer().tries) + " Try/Tries 🥳");
+                Game.getPlayer().setLoserAlphabet(false);
+                getPlayer().setAlphabetsScore(getPlayer().tries);
+                return true;
+            } else if (this.userInput < this.randomAlphabet) {
+                if (this.isHint()) {
+                    System.out.println("wrong! " + this.userInput + " Is Lower ❌");
+                }
+                this.decreaseNoOfGuesses();
+            } else {
+                if (this.isHint()) {
+                    System.out.println("wrong! " + this.userInput + " Is higher ❌");
+                }
+                this.decreaseNoOfGuesses();
+            }
+
+            if (this.getNoOfGuesses() == 0) {
+                Game.getPlayer().setLoserAlphabet(true);
+                System.out.println("You Lost!");
+                return false;
+            }
+            return false;
+        }
+
+        /**
+         * levelOne() sets the game parameters for level, including the number
+         * of guesses, hint availability, and the upper bound of the range. It
+         * then prints game instructions to the console.
+         */
+        public void levelOne() {
+            this.setNoOfGuesses(5);
+            this.setHint(true);
+            this.setBound(10);
+            this.getRangeAlphabet(
+                    String.valueOf(GAME_TYPE.Alphabets),
+                    getBound(),
+                    getNoOfGuesses());
+
+            System.out.println(
+                    this.getInstructions(
+                            String.valueOf(GAME_TYPE.Alphabets),
+                            getNoOfGuesses(),
+                            String.valueOf(LEVEL.Easy)));
+        }
+
+        /**
+         * levelTwo() sets the game parameters for level, including the number
+         * of guesses, hint availability, and the upper bound of the range. It
+         * then prints game instructions to the console.
+         */
+        @Override
+        public void levelTwo() {
+            this.setNoOfGuesses(4);
+            this.setHint(false);
+            this.setBound(17);
+            this.getRangeAlphabet(
+                    String.valueOf(GAME_TYPE.Alphabets),
+                    getBound(),
+                    getNoOfGuesses());
+
+            System.out.println(
+                    this.getInstructions(
+                            String.valueOf(GAME_TYPE.Alphabets),
+                            getNoOfGuesses(),
+                            String.valueOf(LEVEL.Medium)));
+        }
+
+        /**
+         * levelThree() sets the game parameters for level, including the number
+         * of guesses, hint availability, and the upper bound of the range. It
+         * then prints game instructions to the console.
+         */
+        @Override
+        public void levelThree() {
+            this.setNoOfGuesses(3);
+            this.setHint(false);
+            this.setBound(25);
+            this.getRangeAlphabet(String.valueOf(GAME_TYPE.Alphabets),
+                    getBound(),
+                    getNoOfGuesses());
+
+            System.out.println(
+                    this.getInstructions(
+                            String.valueOf(GAME_TYPE.Alphabets),
+                            getNoOfGuesses(),
+                            String.valueOf(LEVEL.Hard)));
+        }
+
+        /**
+         * getUserInput() overrides the getUserInput() method in the Game class,
+         * prompts the user to input a character, and sets the userInput
+         * instance variable to the user's input.
+         */
+        @Override
+        public boolean getUserInput() {
+            Scanner input = new Scanner(System.in);
+
+            if (input.hasNextInt()) {
+                System.out.println("Invalid Input!");
+            } else {
+                char c = input.next().toLowerCase().charAt(0);
+
+                if (c >= 'a' && c <= 'z') {
+                    this.userInput = c;
+                    return true;
+                } else {
+                    System.out.println("Invalid Input!");
+                }
+            }
+            return false;
+        }
+
+        /**
+         * printHighScoreStatus() A function to get report of highScore for each
+         * model game, and prints a message.
+         */
+        public void printHighScoreStatus() {
+            if (Game.getPlayer().isLoserAlphabet()
+                    && Game.getPlayer().getAlphabetsHighScore() == 0) {
+                System.out.println("You didn't have a high score yet.");
+            } else if (!(Game.getPlayer().isLoserAlphabet())
+                    && Game.getPlayer().getAlphabetsHighScore() != 0) {
+                System.out.println("Your High Score in Guessing Alphabets is: "
+                        + Game.getPlayer().getAlphabetsHighScore());
+            } else if (Game.getPlayer().getAlphabetsHighScore() == 0) {
+                System.out.println("Guessing Alphabets is not played yet");
+            } else {
+                System.out.println("Your High Score in Guessing Alphabets is: "
+                        + Game.getPlayer().getAlphabetsHighScore());
+            }
+        }
+    }
+
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        GuessAlphabets alphabets = new GuessAlphabets();
+        GuessNumbers numbers = new GuessNumbers();
+        while (true) {
+            System.out.print("""
+                    _____________________________________________________________________
+                    Welcome to ZAN (the best guessing game in the world),play the game :
+                    -----
+                    Enter 1 for numbers
+                    Enter 2 for Alphabets
+                    Enter 3 for getting the high score
+                    Enter 4 for Credits
+                    Enter 5 to Exit
+                    Enter you choice :\s"""
+            );
+            Scanner input = new Scanner(System.in);
+            int choice = input.nextInt();
+            switch (choice) {
+                case 1 ->
+                    numbers.handleChoice();
+                case 2 ->
+                    alphabets.handleChoice();
+                case 3 -> {
+                    // getting highScore status message
+                    numbers.printHighScoreStatus();
+                    alphabets.printHighScoreStatus();
+                }
+                case 4 ->
+                    Game.getPlayer().printCredits();
+
+                case 5 -> {
+                    System.out.println("Thank you for playing, we will wait for you!");
+                    return;
+                }
+                default ->
+                    System.out.println("Invalid Option\n");
+            }
+        }
+    }
+
+}
